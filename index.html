@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>צור את האקסולוטל שלך!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff4081;
+            --secondary-color: #ff80ab;
+            --background-color: #fce4ec;
+            --icon-size: 1.2rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--background-color);
+            direction: rtl;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .control-panel {
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .control-group {
+            margin-bottom: 1rem;
+        }
+
+        .control-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .control-header h2 {
+            font-size: 1.2rem;
+            margin: 0;
+            margin-right: 0.5rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .option-button {
+            width: 40px;
+            height: 40px;
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            background: #f5f5f5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--icon-size);
+            color: #666;
+            transition: all 0.2s ease;
+        }
+
+        .option-button:hover {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .option-button.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .color-option {
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .canvas-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #axolotlCanvas {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            aspect-ratio: 1;
+            border: 3px solid var(--secondary-color);
+            border-radius: 10px;
+        }
+
+        .share-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .share-link {
+            flex: 1;
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .main-container {
+                flex-direction: row-reverse;
+                align-items: flex-start;
+            }
+
+            .control-panel {
+                width: 300px;
+                position: sticky;
+                top: 1rem;
+            }
+
+            .canvas-container {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="control-panel">
+            <div class="control-group">
+                <div class="control-header">
+                    <i class="fas fa-palette"></i>
+                    <h2>צבע</h2>
+                </div>
+                <div class="options-grid">
+                    <button class="option-button color-option" style="background-color: #FFB6C1" data-color="pastel pink"></button>
+                    <button class="option-button color-option" style="background-color: #E6E6FA" data-color="lavender"></button>
+                    <button class="option-button color-option" style="background-color: #98FF98" data-color="mint green"></button>
+                    <button class="option-button color-option" style="background-color: #89CFF0" data-color="baby blue"></button>
+                    <button class="option-button color-option" style="background-color: #FF7F50" data-color="coral"></button>
+                    <button class="option-button random-color">
+                        <i class="fas fa-random"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <i class="fas fa-cut"></i>
+                    <h2>שיער</h2>
+                </div>
+                <div class="options-grid">
+                    <button class="option-button" data-hair="straight">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="option-button" data-hair="curly">
+                        <i class="fas fa-wave-square"></i>
+                    </button>
+                    <button class="option-button" data-hair="mohawk">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                    <button class="option-button" data-hair="pigtails">
+                        <i class="fas fa-grip-lines"></i>
+                    </button>
+                    <button class="option-button" data-hair="none">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <i class="fas fa-hat-wizard"></i>
+                    <h2>אביזרים</h2>
+                </div>
+                <div class="options-grid">
+                    <button class="option-button" data-accessory="bow">
+                        <i class="fas fa-ribbon"></i>
+                    </button>
+                    <button class="option-button" data-accessory="hat">
+                        <i class="fas fa-hat-cowboy"></i>
+                    </button>
+                    <button class="option-button" data-accessory="glasses">
+                        <i class="fas fa-glasses"></i>
+                    </button>
+                    <button class="option-button" data-accessory="crown">
+                        <i class="fas fa-crown"></i>
+                    </button>
+                    <button class="option-button" data-accessory="monocle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <i class="fas fa-fill-drip"></i>
+                    <h2>רקע</h2>
+                </div>
+                <div class="options-grid">
+                    <button class="option-button" data-background="none">
+                        <i class="fas fa-ban"></i>
+                    </button>
+                    <button class="option-button" data-background="bubbles">
+                        <i class="fas fa-circle"></i>
+                    </button>
+                    <button class="option-button" data-background="stars">
+                        <i class="fas fa-star"></i>
+                    </button>
+                    <button class="option-button" data-background="hearts">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="control-header">
+                    <i class="fas fa-share-alt"></i>
+                    <h2>שתף</h2>
+                </div>
+                <div class="share-container">
+                    <input type="text" class="share-link" id="shareLink" readonly>
+                    <button class="option-button" onclick="copyShareLink()">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="axolotlCanvas"></canvas>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
